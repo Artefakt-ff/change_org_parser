@@ -3,6 +3,16 @@ from requests import get
 import re
 
 
+def no_panic(func):
+    def wrapper(*args, **kwargs):
+        try:
+            func(*args, **kwargs)
+        except Exception as e:
+            print(e)
+
+    return wrapper
+
+
 class Petition:
     BASE_URL = 'https://www.change.org'
     petition_fields = ['title', 'description', 'subscribers_num', 'subscribers_num_goal', 'place', 'date']
@@ -22,6 +32,7 @@ class Petition:
             return text.replace('\n', '').replace('  ', ' ').replace(',', '')
         return text
 
+    @no_panic
     def format(self):
         self.title = self.common_formatter(self.title)
         if self.description != '':
@@ -39,6 +50,7 @@ class Petition:
         data = [self.__getattribute__(field) for field in self.petition_fields]
         return ','.join(data) + '\n'
 
+    @no_panic
     def get_date(self, link):
         resp = get(link, headers={'accept-language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
                                   'cookie': '%7B%22locale%22%3A%22ru-RU%22%2C%22countryCode%22%3A%22AM%22%7D;'})

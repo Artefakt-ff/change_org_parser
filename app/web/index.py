@@ -1,6 +1,5 @@
-from flask import Flask, request, render_template, Response
+from flask import Flask, request, render_template, Response, jsonify
 from datetime import datetime
-from flask import jsonify
 
 from app.parser.Parser import Parser
 

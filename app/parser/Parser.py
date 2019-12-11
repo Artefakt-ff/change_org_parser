@@ -6,7 +6,7 @@ from app.parser.Petition import Petition
 
 
 class Parser:
-    BASE_URL = 'https://www.change.org/petitions'
+    BASE_URL = 'https://www.change.org/petitions?selected=recent'
 
     def __init__(self):
         self.driver = webdriver.Chrome()
